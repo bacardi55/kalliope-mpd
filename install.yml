@@ -1,0 +1,11 @@
+- name: Kalliope MPD neuron install
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  become: true
+
+  tasks:
+    - name: "Install pip dependencies"
+      pip:
+        name: python-mpd2
+        version: 0.5.5

@@ -1,0 +1,34 @@
+---
+  - name: "play-music"
+    signals:
+      - order: "start playlist {{query}}"
+    neurons:
+      - kalliopempd:
+          mpd_action: "playlist"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+          mpd_random: 1
+          args:
+            - query
+
+  - name: "pause-music"
+    signals:
+      - order: "pause music"
+    neurons:
+      - kalliopempd:
+          mpd_action: "toggle_play"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+          mpd_random: 1
+
+
+  - name: "search-music"
+    signals:
+      - order: "search for {{mpd_search}} music"
+    neurons:
+      - kalliopempd:
+          mpd_action: "search_music"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+          mpd_random: 1
+
