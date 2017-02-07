@@ -1,4 +1,5 @@
 ---
+
   - name: "play-music"
     signals:
       - order: "start playlist {{query}}"
@@ -11,7 +12,29 @@
           args:
             - query
 
-  - name: "pause-music"
+  - name: "play-music-hiphop"
+    signals:
+      - order: "start playing good music"
+    neurons:
+      - kalliopempd:
+          mpd_action: "playlist"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+          mpd_random: 1
+          query: "HipHop"
+
+  - name: "search-fashion-music"
+    signals:
+      - order: "put some fashion music"
+    neurons:
+      - kalliopempd:
+          mpd_action: "playlist"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+          mpd_random: 0
+          query: "Spotify/Top tracks/Global"
+
+  - name: "play-toggle"
     signals:
       - order: "pause music"
     neurons:
@@ -21,14 +44,42 @@
           mpd_port: "yyyy"
           mpd_random: 1
 
+  - name: "play-next"
+    signals:
+      - order: "put next song"
+    neurons:
+      - kalliopempd:
+          mpd_action: "play_next"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+
+  - name: "play-previous"
+    signals:
+      - order: "put previous song"
+    neurons:
+      - kalliopempd:
+          mpd_action: "play_previous"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+
+  - name: "play-stop"
+    signals:
+      - order: "stop the music"
+    neurons:
+      - kalliopempd:
+          mpd_action: "play_stop"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
 
   - name: "search-music"
     signals:
       - order: "search for {{mpd_search}} music"
     neurons:
       - kalliopempd:
-          mpd_action: "search_music"
+          mpd_action: "search"
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
-          mpd_random: 1
+          mpd_random: 0
+          args:
+            - query
 

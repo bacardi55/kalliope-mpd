@@ -1,4 +1,5 @@
 import logging
+import json
 
 from kalliope.core.NeuronModule import NeuronModule, InvalidParameterException
 from mpd import MPDClient
@@ -30,14 +31,21 @@ class Kalliopempd (NeuronModule):
                 self.mpd_action_playlist()
             elif self.configuration['mpd_action'] == "toggle_play":
                 logger.debug("MPD Action: toggle play")
-                # TODO
+                self.mpd_action_toggle_play()
             elif self.configuration['mpd_action'] == "search":
                 logger.debug("MPD Action: search")
-                # TODO
+                self.mpd_action_search()
+            elif self.configuration['mpd_action'] == "play_next":
+                self.client.next()
+            elif self.configuration['mpd_action'] == "play_previous":
+                self.client.previous()
+            elif self.configuration['mpd_action'] == "play_stop":
+                self.client.stop()
             else :
                 logger.debug("MPD Action: Not found")
                 # TODO
 
+        self.mpd_disconnect()
             
 
     def mpd_action_playlist(self):
@@ -46,11 +54,20 @@ class Kalliopempd (NeuronModule):
         self.clear_playlist()
         try:
             self.client.load(self.configuration['query'])
+            # TODO update to a random number.
             self.client.play(0)
         except Exception:
             logger.debug("MPD playlist not found") 
-        # TODO update to a random number.
         
+    def mpd_action_search(self):
+	logger.debug("In search action:")
+        self.clear_playlist()
+        results = self.client.findadd('any', 'Michael Jackson')
+        self.client.play(0)
+
+    def mpd_action_toggle_play(self):
+	logger.debug("In toggle action:")
+        self.client.pause()
 
     def init_mpd_client(self):
         client = MPDClient() 
@@ -67,7 +84,7 @@ class Kalliopempd (NeuronModule):
     def clear_playlist(self):
         self.client.clear()
         
-    def client_disconnect(self):
+    def mpd_disconnect(self):
         self.client.close()
         self.client.disconnect()
 
