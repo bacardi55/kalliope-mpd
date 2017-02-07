@@ -62,7 +62,7 @@ class Kalliopempd (NeuronModule):
     def mpd_action_search(self):
 	logger.debug("In search action:")
         self.clear_playlist()
-        results = self.client.findadd('any', 'Michael Jackson')
+        results = self.client.findadd('any', self.configuration['query'])
         self.client.play(0)
 
     def mpd_action_toggle_play(self):
