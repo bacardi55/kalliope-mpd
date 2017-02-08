@@ -28,7 +28,7 @@ Make kalliope play songs / playlist via an mpd server
 
 Available actions are fow now:
 - playlist (*requires query parameters*): run a playlist
-- playlist_spotify (*specific to mopidy*- *requires query parameters*): run a playlist
+- playlist_spotify (**specific to mopidy** - *requires query parameters*): run a playlist
 - toggle_play: to toggle play/pause
 - search (*requires query parameters*): to search music and play it
 - play_next: play next song
