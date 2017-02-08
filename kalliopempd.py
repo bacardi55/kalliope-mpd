@@ -4,6 +4,8 @@ import json
 from kalliope.core.NeuronModule import NeuronModule, InvalidParameterException
 from mpd import MPDClient
 
+from random import randint
+
 logging.basicConfig()
 logger = logging.getLogger("kalliope")
 
@@ -25,10 +27,13 @@ class Kalliopempd (NeuronModule):
         if self._is_parameters_ok():
 
             self.init_mpd_client()
- 
+
             if self.configuration['mpd_action'] == "playlist":
                 logger.debug("MPD Action: playlist")
                 self.mpd_action_playlist()
+            elif self.configuration['mpd_action'] == "playlist_spotify":
+                logger.debug("MPD Action: spotify playlist")
+                self.mpd_action_spotify_playlist()
             elif self.configuration['mpd_action'] == "toggle_play":
                 logger.debug("MPD Action: toggle play")
                 self.mpd_action_toggle_play()
@@ -46,7 +51,7 @@ class Kalliopempd (NeuronModule):
                 # TODO
 
         self.mpd_disconnect()
-            
+
 
     def mpd_action_playlist(self):
 	logger.debug("In Playlist action:")
@@ -54,11 +59,34 @@ class Kalliopempd (NeuronModule):
         self.clear_playlist()
         try:
             self.client.load(self.configuration['query'])
-            # TODO update to a random number.
-            self.client.play(0)
-        except Exception:
-            logger.debug("MPD playlist not found") 
-        
+
+            #self.client.count() returns 0 as the playlist is not loaded yet
+            #Temp workaround: random number between 0 and 20
+            r = 0
+            if self.configuration['mpd_random'] == 1:
+                r = randint(0, 20)
+            self.client.play(r)
+        except Exception, e:
+            logger.debug("MPD playlist not found")
+            logger.debug(e)
+
+    def mpd_action_spotify_playlist(self):
+	logger.debug("In Spotify Playlist action:")
+	logger.debug(self.configuration['query'])
+        self.clear_playlist()
+        try:
+            results = self.client.lsinfo(self.configuration['query'])
+            for result in results:
+                self.client.add(result['file'])
+
+            r = 0
+            if self.configuration['mpd_random'] == 1:
+                r = randint(0,len(results))
+            self.client.play(r)
+        except Exception, e:
+            logger.debug("MPD playlist not found on spotify")
+            logger.debug(e)
+
     def mpd_action_search(self):
 	logger.debug("In search action:")
         self.clear_playlist()
@@ -70,8 +98,8 @@ class Kalliopempd (NeuronModule):
         self.client.pause()
 
     def init_mpd_client(self):
-        client = MPDClient() 
-        client.timeout = 10 
+        client = MPDClient()
+        client.timeout = 10
         client.idletimeout = None
         client.connect(self.configuration['mpd_url'], self.configuration['mpd_port'])  # connect to localhost:6600
         client.random(self.configuration['mpd_random'])
@@ -83,7 +111,7 @@ class Kalliopempd (NeuronModule):
 
     def clear_playlist(self):
         self.client.clear()
-        
+
     def mpd_disconnect(self):
         self.client.close()
         self.client.disconnect()
@@ -101,7 +129,6 @@ class Kalliopempd (NeuronModule):
         if self.configuration['mpd_action'] is None:
             raise InvalidParameterException("MPD needs an action")
 
-        # TODO
 
         return True
 
