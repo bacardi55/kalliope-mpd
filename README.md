@@ -129,5 +129,5 @@ Search and play musics hard coded in brain
 see more example in the [sample brain file](https://github.com/bacardi55/kalliope-mpd/blob/master/samples/brain.yml)
 
 
-* [my posts about kalliope](https://bacardi55.org/en/blog/2017/kalliope-neuron-google-calendar)
+* [my posts about kalliope](http://bacardi55.org/en/term/kalliope)
 
