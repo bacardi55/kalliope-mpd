@@ -40,6 +40,9 @@ class Kalliopempd (NeuronModule):
             elif self.configuration['mpd_action'] == "search":
                 logger.debug("MPD Action: search")
                 self.mpd_action_search()
+            elif self.configuration['mpd_action'] == "file":
+                logger.debug("MPD Action: read file")
+                self.mpd_action_file()
             elif self.configuration['mpd_action'] == "play_next":
                 self.client.next()
             elif self.configuration['mpd_action'] == "play_previous":
@@ -91,6 +94,12 @@ class Kalliopempd (NeuronModule):
 	logger.debug("In search action:")
         self.clear_playlist()
         results = self.client.findadd('any', self.configuration['query'])
+        self.client.play(0)
+
+    def mpd_action_file(self):
+	logger.debug("In read file action:")
+        self.clear_playlist()
+        results = self.client.add(self.configuration['query'])
         self.client.play(0)
 
     def mpd_action_toggle_play(self):

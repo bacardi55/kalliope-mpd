@@ -31,6 +31,7 @@ Available actions are fow now:
 - playlist_spotify (**specific to mopidy** - *requires query parameters*): run a playlist
 - toggle_play: to toggle play/pause
 - search (*requires query parameters*): to search music and play it
+- file (*requires query parameters*): to play a simple file (via this, you can run radio via mopidy tuneIn addon)
 - play_next: play next song
 - play_previsous: play previous song
 - play_stop: Stop playing
@@ -120,6 +121,31 @@ Search and play musics hard coded in brain
           mpd_port: "yyyy"
           mpd_random: 0
           query: "My favorite song name"
+```
+
+Play a file (via mopidy, can play a radio url or other)
+
+```yaml
+  - name: "play-radio"
+    signals:
+      - order: "Play radio {{query}}"
+    neurons:
+      - kalliopempd:
+          mpd_action: "file"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+          mpd_random: 0
+          query: "fileName"
+  - name: "play-radio-bbc"
+    signals:
+      - order: "Play BBC radio"
+    neurons:
+      - kalliopempd:
+          mpd_action: "file"
+          mpd_url: "xxx.xxx.xxx.xxx"
+          mpd_port: "yyyy"
+          mpd_random: 0
+          query: "tunein:station:<stationNumber>"
 ```
 
 ## Template example
