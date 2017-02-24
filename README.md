@@ -23,6 +23,7 @@ Make kalliope play songs / playlist via an mpd server
 | mpd_port   | yes      | 6600      | string  | The port of the mpd server                                                                 |
 | mpd_pass   | no       |           | string  | The password of the mpd server                                                             |
 | mpd_random | no       | 0         | 0 or 1  | If playlist will be played randomly or not                                                 |
+| mpd_volume | no       | 100       | Int     | Volume level. Needs to be between 0 and 100                                                |
 | query      | no       |           |         | The query (eg: playlist name or artist/song/album to search                                |
 
 
@@ -135,6 +136,7 @@ Play a file (via mopidy, can play a radio url or other)
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
           mpd_random: 0
+          mpd_volume: "75"
           query: "fileName"
   - name: "play-radio-bbc"
     signals:

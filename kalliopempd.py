@@ -20,7 +20,8 @@ class Kalliopempd (NeuronModule):
             "mpd_port": kwargs.get('mpd_port', '6600'),
             "mpd_random": kwargs.get('mpd_random', 0),
             "query": kwargs.get('query', None),
-            "mpd_pass": kwargs.get('mpd_pass', None)
+            "mpd_pass": kwargs.get('mpd_pass', None),
+            "mpd_volume": kwargs.get('mpd_volume', "100")
         }
 
         # check parameters
@@ -112,6 +113,7 @@ class Kalliopempd (NeuronModule):
         client.idletimeout = None
         client.connect(self.configuration['mpd_url'], self.configuration['mpd_port'])  # connect to localhost:6600
         client.random(self.configuration['mpd_random'])
+        client.setvol(self.configuration['mpd_volume'])
 
         if self.configuration['mpd_pass']:
             client.password(self.configuration['mpd_pass'])
