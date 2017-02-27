@@ -140,7 +140,7 @@ class Kalliopempd (NeuronModule):
         if self.configuration['mpd_action'] is None:
             raise InvalidParameterException("MPD needs an action")
         elif self.configuration['mpd_action'] in ['playlist', 'playlist_spotify', 'search', 'file'] \
-            and self.configuration['mp_query'] is None:
+            and self.configuration['query'] is None:
             raise InvalidParameterException("MPD requires a query for this action")
 
         return True
