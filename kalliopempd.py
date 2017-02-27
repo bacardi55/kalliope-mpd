@@ -20,7 +20,7 @@ class Kalliopempd (NeuronModule):
             "mpd_port": kwargs.get('mpd_port', '6600'),
             "mpd_random": kwargs.get('mpd_random', 0),
             "query": kwargs.get('query', None),
-            "mpd_pass": kwargs.get('mpd_pass', None),
+            "mpd_pass": kwargs.get('mpd_password', None),
             "mpd_volume": kwargs.get('mpd_volume', "100")
         }
 
@@ -139,7 +139,9 @@ class Kalliopempd (NeuronModule):
 
         if self.configuration['mpd_action'] is None:
             raise InvalidParameterException("MPD needs an action")
-
+        elif self.configuration['mpd_action'] in ['playlist', 'playlist_spotify', 'search', 'file'] \
+            and self.configuration['mp_query'] is None:
+            raise InvalidParameterException("MPD requires a query for this action")
 
         return True
 

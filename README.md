@@ -16,15 +16,15 @@ Make kalliope play songs / playlist via an mpd server
 
 ## Options
 
-| parameter  | required | default   | choices | comment                                                                                    |
-|------------|----------|-----------|---------|--------------------------------------------------------------------------------------------|
-| mpd_action | yes      |           | string  | The action to fire with mpd neuron (see below)                                             |
-| mpd_url    | no       | localhost | string  | The url of the mpd server                                                                  |
-| mpd_port   | yes      | 6600      | string  | The port of the mpd server                                                                 |
-| mpd_pass   | no       |           | string  | The password of the mpd server                                                             |
-| mpd_random | no       | 0         | 0 or 1  | If playlist will be played randomly or not                                                 |
-| mpd_volume | no       | 100       | Int     | Volume level. Needs to be between 0 and 100                                                |
-| query      | no       |           |         | The query (eg: playlist name or artist/song/album to search                                |
+| parameter    | required | default   | choices | comment                                                                                    |
+|--------------|----------|-----------|---------|--------------------------------------------------------------------------------------------|
+| mpd_action   | yes      |           | string  | The action to fire with mpd neuron (see below)                                             |
+| mpd_url      | no       | localhost | string  | The url of the mpd server                                                                  |
+| mpd_port     | yes      | 6600      | string  | The port of the mpd server                                                                 |
+| mpd_password | no       |           | string  | The password of the mpd server                                                             |
+| mpd_random   | no       | 0         | 0 or 1  | If playlist will be played randomly or not                                                 |
+| mpd_volume   | no       | 100       | Int     | Volume level. Needs to be between 0 and 100                                                |
+| query        | no       |           |         | The query (eg: playlist name or artist/song/album to search                                |
 
 
 Available actions are fow now:
