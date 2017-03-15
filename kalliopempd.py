@@ -112,8 +112,8 @@ class Kalliopempd (NeuronModule):
         client.timeout = 10
         client.idletimeout = None
         client.connect(self.configuration['mpd_url'], self.configuration['mpd_port'])  # connect to localhost:6600
-        client.random(self.configuration['mpd_random'])
-        client.setvol(self.configuration['mpd_volume'])
+        client.random(int(self.configuration['mpd_random']))
+        client.setvol(int(self.configuration['mpd_volume']))
 
         if self.configuration['mpd_pass']:
             client.password(self.configuration['mpd_pass'])

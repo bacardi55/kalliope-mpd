@@ -58,7 +58,7 @@ Play a playlist by giving its name to kalliope
           mpd_action: "playlist"
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
-          mpd_random: 1
+          mpd_random: "1"
           args:
             - query
 ```
@@ -74,7 +74,7 @@ Play a playlist by hard coding it in the arguments
           mpd_action: "playlist"
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
-          mpd_random: 1
+          mpd_random: "1"
           query: "HipHop"
 ```
 
@@ -89,7 +89,7 @@ Play a spotify "top" playlist
           mpd_action: "playlist_spotify"
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
-          mpd_random: 0
+          mpd_random: "0"
           query: "Spotify/Top tracks/Global"
 ```
 
@@ -104,7 +104,7 @@ Search and play musics
           mpd_action: "search"
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
-          mpd_random: 0
+          mpd_random: "0"
           args:
             - query
 ```
@@ -120,7 +120,7 @@ Search and play musics hard coded in brain
           mpd_action: "search"
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
-          mpd_random: 0
+          mpd_random: "0"
           query: "My favorite song name"
 ```
 
@@ -135,7 +135,7 @@ Play a file (via mopidy, can play a radio url or other)
           mpd_action: "file"
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
-          mpd_random: 0
+          mpd_random: "0"
           mpd_volume: "75"
           query: "fileName"
   - name: "play-radio-bbc"
@@ -146,7 +146,7 @@ Play a file (via mopidy, can play a radio url or other)
           mpd_action: "file"
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
-          mpd_random: 0
+          mpd_random: "0"
           query: "tunein:station:<stationNumber>"
 ```
 
