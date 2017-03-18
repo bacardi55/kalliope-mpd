@@ -156,6 +156,6 @@ Play a file (via mopidy, can play a radio url or other)
 
 see more example in the [sample brain file](https://github.com/bacardi55/kalliope-mpd/blob/master/samples/brain.yml)
 
-
-* [my posts about kalliope](http://bacardi55.org/en/term/kalliope)
+* [a post about this neuron](http://bacardi55.org/2017/02/08/kalliope-mpd-neuron.html)
+* [my posts about kalliope](http://bacardi55.org/kalliope.html)
 
