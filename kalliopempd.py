@@ -1,5 +1,4 @@
 import logging
-import json
 
 from kalliope.core.NeuronModule import NeuronModule, InvalidParameterException
 from mpd import MPDClient
@@ -24,11 +23,10 @@ class Kalliopempd (NeuronModule):
             "mpd_volume": kwargs.get('mpd_volume', "100")
         }
 
+        status = "KO"
+        self.init_mpd_client()
         # check parameters
-        if self._is_parameters_ok():
-
-            self.init_mpd_client()
-
+        if self._is_parameters_ok() and self.client:
             if self.configuration['mpd_action'] == "playlist":
                 logger.debug("MPD Action: playlist")
                 self.mpd_action_playlist()
@@ -53,13 +51,15 @@ class Kalliopempd (NeuronModule):
             else :
                 logger.debug("MPD Action: Not found")
                 # TODO
+            self.mpd_disconnect()
+            status = "OK"
+        else:
+            status = "KO"
 
-        self.mpd_disconnect()
-
+        message = {'status': status}
+        self.say(message)
 
     def mpd_action_playlist(self):
-	logger.debug("In Playlist action:")
-	logger.debug(self.configuration['query'])
         self.clear_playlist()
         try:
             self.client.load(self.configuration['query'])
@@ -70,13 +70,11 @@ class Kalliopempd (NeuronModule):
             if self.configuration['mpd_random'] == 1:
                 r = randint(0, 20)
             self.client.play(r)
-        except Exception, e:
+        except Exception as e:
             logger.debug("MPD playlist not found")
             logger.debug(e)
 
     def mpd_action_spotify_playlist(self):
-	logger.debug("In Spotify Playlist action:")
-	logger.debug(self.configuration['query'])
         self.clear_playlist()
         try:
             results = self.client.lsinfo(self.configuration['query'])
@@ -87,38 +85,47 @@ class Kalliopempd (NeuronModule):
             if self.configuration['mpd_random'] == 1:
                 r = randint(0,len(results))
             self.client.play(r)
-        except Exception, e:
+        except Exception as e:
             logger.debug("MPD playlist not found on spotify")
             logger.debug(e)
 
     def mpd_action_search(self):
-	logger.debug("In search action:")
         self.clear_playlist()
         results = self.client.findadd('any', self.configuration['query'])
         self.client.play(0)
 
+        return results
+
     def mpd_action_file(self):
-	logger.debug("In read file action:")
         self.clear_playlist()
         results = self.client.add(self.configuration['query'])
         self.client.play(0)
 
+        return results
+
     def mpd_action_toggle_play(self):
-	logger.debug("In toggle action:")
         self.client.pause()
 
     def init_mpd_client(self):
         client = MPDClient()
-        client.timeout = 10
-        client.idletimeout = None
-        client.connect(self.configuration['mpd_url'], self.configuration['mpd_port'])  # connect to localhost:6600
-        client.random(int(self.configuration['mpd_random']))
-        client.setvol(int(self.configuration['mpd_volume']))
 
-        if self.configuration['mpd_pass']:
-            client.password(self.configuration['mpd_pass'])
+        try:
+            client.timeout = 10
+            client.idletimeout = None
+            client.connect(self.configuration['mpd_url'], self.configuration['mpd_port'])
 
-        self.client = client
+            if self.configuration['mpd_pass']:
+                logger.debug('setting pass %s ' % self.configuration['mpd_pass'])
+                client.password(self.configuration['mpd_pass'])
+
+            client.random(int(self.configuration['mpd_random']))
+            client.setvol(int(self.configuration['mpd_volume']))
+
+            self.client = client
+
+        except Exception as e:
+            logger.debug("error: %s" % e)
+            self.client = False
 
     def clear_playlist(self):
         self.client.clear()
