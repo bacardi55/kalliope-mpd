@@ -59,8 +59,7 @@ Play a playlist by giving its name to kalliope
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
           mpd_random: "1"
-          args:
-            - query
+          query: "{{query}}"
 ```
 
 Play a playlist by hard coding it in the arguments
@@ -105,8 +104,7 @@ Search and play musics
           mpd_url: "xxx.xxx.xxx.xxx"
           mpd_port: "yyyy"
           mpd_random: "0"
-          args:
-            - query
+          query: "{{query}}"
 ```
 
 Search and play musics hard coded in brain
@@ -138,6 +136,7 @@ Play a file (via mopidy, can play a radio url or other)
           mpd_random: "0"
           mpd_volume: "75"
           query: "fileName"
+          
   - name: "play-radio-bbc"
     signals:
       - order: "Play BBC radio"
