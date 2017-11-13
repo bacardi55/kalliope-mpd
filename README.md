@@ -135,7 +135,7 @@ Play a file (via mopidy, can play a radio url or other)
           mpd_port: "yyyy"
           mpd_random: "0"
           mpd_volume: "75"
-          query: "fileName"
+          query: "{{query}}"
           
   - name: "play-radio-bbc"
     signals:
