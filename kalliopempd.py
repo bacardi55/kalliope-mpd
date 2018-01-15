@@ -62,13 +62,13 @@ class Kalliopempd (NeuronModule):
     def mpd_action_playlist(self):
         self.clear_playlist()
         try:
-            self.client.load(self.configuration['query'])
+            results = self.client.listplaylist(self.configuration['query'])
+            for result in results:
+                self.client.add(result)
 
-            #self.client.count() returns 0 as the playlist is not loaded yet
-            #Temp workaround: random number between 0 and 20
             r = 0
             if self.configuration['mpd_random'] == 1:
-                r = randint(0, 20)
+                r = randint(0,len(results))
             self.client.play(r)
         except Exception as e:
             logger.debug("MPD playlist not found")
