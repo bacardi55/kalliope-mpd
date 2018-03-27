@@ -8,4 +8,4 @@
     - name: "Install pip dependencies"
       pip:
         name: python-mpd2
-        version: 0.5.5
+        version: 1.0.0
